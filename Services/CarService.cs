@@ -4,18 +4,16 @@ namespace Web_API.Services
 {
     public class CarService
     {
-        static List<Car> Cars { get; }
+        static List<Car> Cars { get; set; }
         static int idIterator = 3;
         static CarService() 
         {
             Cars = new List<Car>
             {
-            new Car{Id = 1},
-            new Car{Id = 2}
+            //new Car{Id = 1, CarManufacturer = ManufacturerService.GetManufacturer(0)},
+            //new Car{Id = 2, CarManufacturer = ManufacturerService.GetManufacturer(1)}
             };
         }
-        
-
         //GetById
         public static Car? Get(int id) 
         {
@@ -27,13 +25,14 @@ namespace Web_API.Services
         public static void Create(Car car) 
         { 
             car.Id = idIterator++;
+            ManufacturerService.AddManufacturedCar(car);
             Cars.Add(car);
         }
         //Put 
-        public static void Update(int id, Car car) 
+        public static void Update(int id, Car newCar) 
         {
             int index = Cars.FindIndex(c => c.Id == id);
-            Cars[index] = car;
+            Cars[index] = newCar;
         }
         //Delete
         public static void Delete(int id)

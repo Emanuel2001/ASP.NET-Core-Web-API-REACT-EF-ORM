@@ -27,6 +27,10 @@ namespace Web_API.Controllers
             { 
                 return BadRequest(); 
             }
+            if(ManufacturerService.CheckCarManufacturer(car.CarManufacturer.Id)) 
+            { 
+                return NotFound();
+            }
             CarService.Create(car);
             return CreatedAtAction(nameof(Get),car);
         }
@@ -37,6 +41,12 @@ namespace Web_API.Controllers
             {
                 return BadRequest();
             }
+            //Make a check for the id 
+            if (ManufacturerService.CheckCarManufacturer(car.CarManufacturer.Id))
+            {
+                return NotFound();
+            }
+            ManufacturerService.UpdateManufacturedCar(id,car);
             CarService.Update(id,car);
             return Ok();
         }
@@ -47,6 +57,7 @@ namespace Web_API.Controllers
             {
                 return BadRequest();
             }
+            ManufacturerService.DeleteManufacturedCar(id);
             CarService.Delete(id);
             return Ok();
         }
